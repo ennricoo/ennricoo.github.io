@@ -18,6 +18,10 @@ export const site = {
 
   // Codice server Cfx (cfx.re/join/<codice>): mostra i giocatori in città.
   cfxCode: '',
+
+  // Il regolamento vive su un sottodominio: in locale si apre su /regolamento/
+  mainUrl: import.meta.env.DEV ? '/' : 'https://encoderp.it/',
+  rulesUrl: import.meta.env.DEV ? '/regolamento/' : 'https://regolamento.encoderp.it/',
 }
 
 // Immagini in public/img (generate con `npm run images`)

@@ -38,3 +38,31 @@ jobs:
     steps:
       - id: deployment
         uses: actions/deploy-pages@v4
+
+  # Regolamento su regolamento.encoderp.it: GitHub Pages permette un solo dominio
+  # per repository, quindi il build viene pubblicato nel repo ennricoo/regolamento.
+  # Serve il secret REGOLAMENTO_TOKEN (token con permesso "Contents: write" su quel repo).
+  regolamento:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    env:
+      TOKEN: ${{ secrets.REGOLAMENTO_TOKEN }}
+    steps:
+      - uses: actions/checkout@v4
+        if: env.TOKEN != ''
+      - uses: actions/setup-node@v4
+        if: env.TOKEN != ''
+        with:
+          node-version: 20
+          cache: npm
+      - run: npm ci && npm run build:regolamento
+        if: env.TOKEN != ''
+      - uses: peaceiris/actions-gh-pages@v4
+        if: env.TOKEN != ''
+        with:
+          personal_token: ${{ env.TOKEN }}
+          external_repository: ennricoo/regolamento
+          publish_branch: gh-pages
+          publish_dir: dist-regolamento
+          cname: regolamento.encoderp.it

@@ -6,14 +6,17 @@ import DiscordIcon from './DiscordIcon.vue'
 import { site } from '../config'
 
 const props = defineProps({
-  current: { type: String, default: 'home' }, // home | eventi
+  current: { type: String, default: 'home' }, // home | eventi | regolamento
 })
 
+// Il regolamento sta su un sottodominio: lì i link puntano al sito principale
+const home = props.current === 'regolamento' ? site.mainUrl : '/'
 const links = [
-  { href: '/#chi-siamo', label: 'Chi siamo' },
-  { href: '/#anteprime', label: 'Anteprime' },
-  { href: '/eventi/', label: 'Eventi', page: 'eventi' },
-  { href: '/#community', label: 'Community' },
+  { href: `${home}#chi-siamo`, label: 'Chi siamo' },
+  { href: `${home}#anteprime`, label: 'Anteprime' },
+  { href: `${home}eventi/`, label: 'Eventi', page: 'eventi' },
+  { href: `${home}#community`, label: 'Community' },
+  { href: props.current === 'regolamento' ? '#top' : site.rulesUrl, label: 'Regolamento', page: 'regolamento' },
 ]
 
 const open = ref(false)
@@ -42,7 +45,7 @@ onBeforeUnmount(() => {
 <template>
   <header class="nav" :class="{ 'is-scrolled': scrolled || open, 'is-open': open }">
     <nav class="nav-inner container" aria-label="Principale">
-      <a :href="props.current === 'home' ? '#top' : '/'" class="nav-brand" @click="open = false">
+      <a :href="props.current === 'home' ? '#top' : home" class="nav-brand" @click="open = false">
         <BrandWordmark />
       </a>
 
