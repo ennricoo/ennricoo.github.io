@@ -14,10 +14,18 @@ const pad = (n) => String(n).padStart(2, '0')
 const updated = new Intl.DateTimeFormat('it-IT', { day: 'numeric', month: 'long', year: 'numeric' })
   .format(new Date(`${rules.updated}T12:00:00`))
 
+// Sottocategorie: `group` vale dal primo articolo che lo dichiara fino al successivo
+const withGroups = (list) => {
+  let group
+  return list.map((a) => ((group = a.group ?? group), { ...a, group }))
+}
+// `head`: il titolo del gruppo va mostrato prima di questo articolo
+const markHeads = (list) => list.map((a, j) => ({ ...a, head: a.group && a.group !== list[j - 1]?.group ? a.group : null }))
+
 const sections = rules.sections.map((s, i) => ({
   ...s,
   n: i + 1,
-  articles: s.articles.map((a, j) => ({ ...a, n: `${i + 1}.${j + 1}`, id: `art-${i + 1}-${j + 1}` })),
+  articles: markHeads(withGroups(s.articles).map((a, j) => ({ ...a, n: `${i + 1}.${j + 1}`, id: `art-${i + 1}-${j + 1}` }))),
 }))
 const totalArticles = sections.reduce((t, s) => t + s.articles.length, 0)
 const readyChapters = sections.filter((s) => !s.pending).length
@@ -35,7 +43,7 @@ const blockText = (b) =>
     : b.map ? b.map.places.map((p) => p.name).join(' ')
     : ''
 const plain = (s) => s.replace(/\*\*/g, '').toLowerCase()
-const articleText = (a) => plain([a.title, ...a.body.map(blockText)].join(' '))
+const articleText = (a) => plain([a.group ?? '', a.title, ...a.body.map(blockText)].join(' '))
 
 /* ---------- Capitolo aperto: uno alla volta, come una documentazione ---------- */
 const current = ref(sections[0].id)
@@ -176,7 +184,10 @@ const open = async (id, { push = true } = {}) => {
   else {
     active.value = id
     forcedUntil = performance.now() + 900
-    reveal(document.getElementById(id), same)
+    // Il primo articolo di un gruppo si apre insieme al titolo del gruppo
+    const el = document.getElementById(id)
+    const group = el?.closest('.art')?.previousElementSibling
+    reveal(group?.classList.contains('art-group') ? group : el, same)
     highlight(id)
   }
   collect()
@@ -204,7 +215,7 @@ const results = computed(() => {
   return sections
     .map((s) => ({
       ...s,
-      articles: plain(s.title).includes(q.value) ? s.articles : s.articles.filter((a) => articleText(a).includes(q.value)),
+      articles: plain(s.title).includes(q.value) ? s.articles : markHeads(s.articles.filter((a) => articleText(a).includes(q.value))),
     }))
     .filter((s) => s.articles.length)
 })
@@ -581,7 +592,9 @@ onBeforeUnmount(() => {
                   @click.prevent="open(s.id)"
                 ><span>{{ pad(s.n) }}</span>{{ s.title }}<em v-if="s.pending" class="toc-soon">presto</em></a>
                 <ol>
-                  <li v-for="a in s.articles" :key="a.id">
+                  <template v-for="a in s.articles" :key="a.id">
+                  <li v-if="a.head" class="toc-group" aria-hidden="true">{{ a.head }}</li>
+                  <li>
                     <a
                       :href="`#${a.id}`"
                       class="toc-art"
@@ -589,6 +602,7 @@ onBeforeUnmount(() => {
                       @click.prevent="open(a.id)"
                     ><span>{{ a.n }}</span>{{ a.title }}</a>
                   </li>
+                  </template>
                 </ol>
               </li>
             </ol>
@@ -625,7 +639,9 @@ onBeforeUnmount(() => {
 
             <section v-for="s in results" :key="s.id" class="found">
               <p class="sec-eyebrow"><b>{{ pad(s.n) }}</b>{{ s.title }}</p>
-              <article v-for="a in s.articles" :key="a.id" class="art">
+              <template v-for="a in s.articles" :key="a.id">
+              <h3 v-if="a.head" class="art-group">{{ a.head }}</h3>
+              <article class="art">
                 <span class="art-n" aria-hidden="true">{{ a.n }}</span>
                 <div class="art-main">
                 <header class="art-head">
@@ -637,6 +653,7 @@ onBeforeUnmount(() => {
                 </a>
                 </div>
               </article>
+              </template>
             </section>
           </template>
 
@@ -657,7 +674,9 @@ onBeforeUnmount(() => {
               <p>Questa sezione del regolamento è in preparazione e verrà pubblicata a breve.</p>
             </div>
 
-            <article v-for="a in chapter.articles" :key="a.id" class="art" :class="{ 'is-flash': flash === a.id }" :aria-labelledby="a.id">
+            <template v-for="a in chapter.articles" :key="a.id">
+            <h3 v-if="a.head" class="art-group">{{ a.head }}</h3>
+            <article class="art" :class="{ 'is-flash': flash === a.id }" :aria-labelledby="a.id">
               <span class="art-n" aria-hidden="true">{{ a.n }}</span>
               <div class="art-main">
               <header class="art-head">
@@ -670,6 +689,7 @@ onBeforeUnmount(() => {
               <div class="art-body"><RuleBlocks :blocks="a.body" /></div>
               </div>
             </article>
+            </template>
 
             <nav class="pager" aria-label="Capitoli">
               <a v-if="prev" :href="`#${prev.id}`" class="pager-link" @click.prevent="open(prev.id)">
@@ -746,11 +766,14 @@ onBeforeUnmount(() => {
               <span>{{ pad(s.n) }}</span>{{ s.title }}<em v-if="s.pending" class="toc-soon">presto</em>
             </a>
             <ol>
-              <li v-for="a in s.articles" :key="a.id">
+              <template v-for="a in s.articles" :key="a.id">
+              <li v-if="a.head" class="toc-group" aria-hidden="true">{{ a.head }}</li>
+              <li>
                 <a :href="`#${a.id}`" class="toc-art" :aria-current="active === a.id ? 'location' : undefined" @click.prevent="open(a.id)">
                   <span>{{ a.n }}</span>{{ a.title }}
                 </a>
               </li>
+              </template>
             </ol>
           </li>
         </ol>
@@ -1045,6 +1068,14 @@ input[type='search']::-webkit-search-cancel-button { display: none; }
 .toc-art span { flex: none; min-width: 2em; font-variant-numeric: tabular-nums; color: var(--text-4); }
 .toc-art[aria-current] { color: #c3d3ff; background: rgba(91,140,255,0.1); }
 .toc-art[aria-current] span { color: #8aa9ff; }
+.toc-group {
+  padding: 12px 10px 4px;
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--text-3);
+}
 
 .side-foot {
   display: flex; align-items: center; justify-content: space-between;
@@ -1138,7 +1169,19 @@ input[type='search']::-webkit-search-cancel-button { display: none; }
 @media (prefers-reduced-motion: reduce) {
   .art.is-flash .art-head::before { animation: none; }
 }
-.art + .art { margin-top: 2.2em; padding-top: 2.2em; border-top: 1px solid var(--rule); }
+/* Tra un articolo e l'altro solo spazio: la linea separa i gruppi (.art-group) */
+.art + .art { margin-top: 2.8em; }
+
+/* Sottocategoria di un capitolo: titoletto sopra il primo articolo del gruppo */
+.art-group {
+  margin-bottom: 1.3em;
+  font-size: 0.78em;
+  font-weight: 650;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--blue-bright);
+}
+.art + .art-group { margin-top: 3.4em; padding-top: 2.2em; border-top: 1px solid var(--rule); }
 .art-head { display: flex; align-items: baseline; gap: 12px; }
 .art-n {
   display: block;

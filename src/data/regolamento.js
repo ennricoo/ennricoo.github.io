@@ -12,6 +12,10 @@
 //   { note: '...', kind: 'info' }        riquadro (kind: 'info' | 'warning')
 //   { table: { head: [...], rows: [[...], ...] } }
 //   { map: { ... } }                     mappa con luoghi evidenziati (vedi capitolo Safezone)
+//
+// Per dividere un capitolo in sottocategorie si aggiunge `group: 'Nome'` al primo
+// articolo di ogni gruppo: vale anche per i successivi finché non ne inizia un altro.
+// La numerazione resta continua (vedi capitolo Assalti).
 
 export const rules = {
   title: 'Regolamento',
@@ -232,6 +236,7 @@ export const rules = {
       intro: ['Assalti alle centrali delle forze dell\'ordine e alle case delle fazioni criminali.'],
       articles: [
         {
+          group: 'Regole comuni',
           title: 'Notifica dell\'assalto',
           body: [
             'Per effettuare un assalto **non** è necessario ottenere un ticket di approvazione, così da mantenere la possibilità di organizzare assalti furtivi e azioni a sorpresa.',
@@ -261,22 +266,24 @@ export const rules = {
           body: ['L\'intera fase organizzativa dell\'assalto dovrà svolgersi esclusivamente in IC. È vietato utilizzare canali esterni al gioco, come Discord o altre piattaforme di comunicazione, per pianificare, coordinare o preparare l\'azione.'],
         },
         {
-          title: 'Centrali: reparti speciali',
+          group: 'Assalti alle centrali',
+          title: 'Reparti speciali',
           body: [
             'Una fazione che decide di assaltare una centrale dovrà tenere in considerazione la presenza di reparti speciali (come la SWAT) all\'interno della centrale stessa.',
             { note: 'Qualsiasi assalto non organizzato o svolto in modo superficiale verrà considerato no-fear estremo.', kind: 'warning' },
           ],
         },
         {
-          title: 'Centrali: loot',
+          title: 'Loot',
           body: ['Durante gli assalti alle centrali si applica la regola generale sul loot dei giocatori. In aggiunta, sarà consentito sottrarre agli agenti delle forze dell\'ordine le chiavi delle manette, se necessario ai fini dell\'azione.'],
         },
         {
-          title: 'Centrali: agenti minimi',
+          title: 'Agenti minimi',
           body: ['Per assaltare una centrale devono essere presenti almeno **7** membri delle forze dell\'ordine.'],
         },
         {
-          title: 'Case fazioni',
+          group: 'Assalti alle case fazioni',
+          title: 'Numero minimo di criminali',
           body: [
             'Per poter assaltare una casa fazione, le forze dell\'ordine dovranno prima verificare il numero di criminali presenti: l\'assalto sarà possibile solo se sono presenti più di **5** membri.',
             'I metodi per contare i criminali vengono decisi durante la pianificazione dell\'assalto (per esempio si può usare un elicottero oppure fingersi un fattorino delle pizze).',
