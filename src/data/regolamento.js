@@ -1,6 +1,6 @@
 // Testo del regolamento. Per modificarlo basta aggiornare questo file.
 //
-// Ogni capitolo ha un `id` (usato nei link, es. regolamento.encoderp.it/#generale),
+// Ogni capitolo ha un `id` (usato nei link, es. encoderp.it/regolamento/#generale),
 // un testo introduttivo facoltativo (`intro`) e una lista di articoli
 // numerati in automatico (Art. 2.3 → #art-2-3).
 // Un capitolo con `pending: true` e senza articoli viene mostrato "In preparazione".

@@ -9,8 +9,8 @@ const props = defineProps({
   current: { type: String, default: 'home' }, // home | eventi | regolamento
 })
 
-// Il regolamento sta su un sottodominio: lì i link puntano al sito principale
-const home = props.current === 'regolamento' ? site.mainUrl : '/'
+// Link alle sezioni della home, validi da ogni pagina
+const home = site.mainUrl
 const links = [
   { href: `${home}#chi-siamo`, label: 'Chi siamo' },
   { href: `${home}#anteprime`, label: 'Anteprime' },
