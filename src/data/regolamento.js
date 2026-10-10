@@ -236,57 +236,54 @@ export const rules = {
       intro: ['Assalti alle centrali delle forze dell\'ordine e alle case delle fazioni criminali.'],
       articles: [
         {
-          group: 'Regole comuni',
-          title: 'Notifica dell\'assalto',
+          group: 'Regole generali',
+          title: 'Notifica e approvazione',
           body: [
-            'Per effettuare un assalto **non** è necessario ottenere un ticket di approvazione, così da mantenere la possibilità di organizzare assalti furtivi e azioni a sorpresa.',
-            'È però obbligatorio aprire un ticket di notifica nella sezione dedicata agli assalti almeno **10 minuti** prima dell\'inizio dell\'azione. Il canale è visibile solo al management e serve a informarlo dell\'evento e a consentire la presenza di almeno uno staffer neutrale.',
+            'Per effettuare un assalto **non** serve l\'approvazione di un ticket, così da permettere azioni furtive e a sorpresa.',
+            'È però obbligatorio aprire un ticket di notifica nella sezione management almeno **3 ore** prima dell\'inizio dell\'azione, indicando chiaramente le motivazioni dell\'assalto. Il canale è visibile solo al management e serve a informarlo dell\'evento, garantendo la presenza di almeno uno staffer neutrale.',
           ],
         },
         {
-          title: 'Motivazione',
+          title: 'Valutazione della direzione',
+          body: ['Se, dopo aver letto le motivazioni nel ticket, la direzione ritiene il motivo non sufficientemente valido, può imporre l\'annullamento dell\'azione, ma solo se questa non è ancora iniziata. In caso contrario, l\'azione è considerata valida.'],
+        },
+        {
+          title: 'Equipaggiamento',
+          body: ['Durante gli assalti non ci sono limitazioni su armi e abbigliamento.'],
+        },
+        {
+          title: 'Registrazione video',
           body: [
-            'Ogni assalto a una centrale o a una casa fazione dovrà essere supportato da una valida motivazione IC: non saranno tollerate azioni prive di motivazione.',
-            'Qualora la motivazione non risulti chiara o sufficientemente evidente, lo staff potrà chiedere chiarimenti all\'organizzatore. La verifica avverrà esclusivamente al termine dell\'azione, senza interferire con il normale svolgimento della scena.',
+            'In ogni assalto almeno un assalitore deve registrare un video completo dell\'intera azione. La clip deve partire dal momento in cui l\'assalitore e il suo gruppo iniziano a organizzarsi e arrivare fino alla conclusione definitiva dell\'assalto, senza interruzioni né modifiche.',
+            'La registrazione va conservata per **48 ore** e messa a disposizione del management per eventuali controlli o verifiche.',
           ],
         },
         {
-          title: 'Armi e indumenti',
-          body: ['Durante gli assalti non ci sono limitazioni di armi o indumenti.'],
+          title: 'Pianificazione solo in IC',
+          body: ['L\'intera fase organizzativa deve svolgersi esclusivamente in IC. È vietato usare canali esterni al gioco (Discord o altre piattaforme) per pianificare, coordinare o preparare l\'azione.'],
         },
         {
-          title: 'Registrazione obbligatoria',
-          body: [
-            'Durante ogni assalto è obbligatorio che almeno un assalitore registri un video completo dell\'intera azione: dal momento in cui l\'assalitore e il suo gruppo iniziano a organizzarsi fino alla conclusione definitiva dell\'assalto, senza interruzioni o modifiche.',
-            'La registrazione dovrà essere conservata per **48 ore** e resa disponibile al management in caso di controllo o verifica dell\'accaduto.',
-          ],
-        },
-        {
-          title: 'Organizzazione in IC',
-          body: ['L\'intera fase organizzativa dell\'assalto dovrà svolgersi esclusivamente in IC. È vietato utilizzare canali esterni al gioco, come Discord o altre piattaforme di comunicazione, per pianificare, coordinare o preparare l\'azione.'],
-        },
-        {
-          group: 'Assalti alle centrali',
+          group: 'Assalti alle centrali delle forze dell\'ordine',
           title: 'Reparti speciali',
           body: [
-            'Una fazione che decide di assaltare una centrale dovrà tenere in considerazione la presenza di reparti speciali (come la SWAT) all\'interno della centrale stessa.',
-            { note: 'Qualsiasi assalto non organizzato o svolto in modo superficiale verrà considerato no-fear estremo.', kind: 'warning' },
+            'Chi decide di assaltare una centrale deve tenere conto della presenza di reparti speciali (come la SWAT) al suo interno.',
+            { note: 'Un assalto non organizzato o svolto in modo superficiale sarà considerato no-fear estremo.', kind: 'warning' },
           ],
         },
         {
           title: 'Loot',
-          body: ['Durante gli assalti alle centrali si applica la regola generale sul loot dei giocatori. In aggiunta, sarà consentito sottrarre agli agenti delle forze dell\'ordine le chiavi delle manette, se necessario ai fini dell\'azione.'],
+          body: ['Negli assalti alle centrali vale la regola generale sul loot dei giocatori. In più, è consentito sottrarre agli agenti le chiavi delle manette, se necessario ai fini dell\'azione.'],
         },
         {
-          title: 'Agenti minimi',
-          body: ['Per assaltare una centrale devono essere presenti almeno **7** membri delle forze dell\'ordine.'],
+          title: 'Forze dell\'ordine minime',
+          body: ['Per assaltare una centrale è necessario un minimo di **7** agenti in servizio.'],
         },
         {
-          group: 'Assalti alle case fazioni',
-          title: 'Numero minimo di criminali',
+          group: 'Assalti alle case fazione',
+          title: 'Verifica preventiva',
           body: [
-            'Per poter assaltare una casa fazione, le forze dell\'ordine dovranno prima verificare il numero di criminali presenti: l\'assalto sarà possibile solo se sono presenti più di **5** membri.',
-            'I metodi per contare i criminali vengono decisi durante la pianificazione dell\'assalto (per esempio si può usare un elicottero oppure fingersi un fattorino delle pizze).',
+            'Prima di assaltare una casa fazione, le forze dell\'ordine devono valutare il numero di criminali presenti. L\'assalto è possibile solo se i membri sono più di **5**.',
+            'I metodi per verificarlo si decidono in fase di pianificazione (ad esempio un sorvolo in elicottero o un travestimento da fattorino delle pizze).',
           ],
         },
       ],
