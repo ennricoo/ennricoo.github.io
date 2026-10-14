@@ -17,7 +17,7 @@ defineProps({
       <li v-for="(t, k) in b.list" :key="k"><RichText :text="t" :query="query" /></li>
     </ul>
     <ol v-else-if="b.steps" class="steps">
-      <li v-for="(t, k) in b.steps" :key="k"><span>{{ k + 1 }}</span><RichText :text="t" :query="query" /></li>
+      <li v-for="(t, k) in b.steps" :key="k"><span>{{ k + 1 }}</span><div><RichText :text="t" :query="query" /></div></li>
     </ol>
     <div v-else-if="b.note" class="callout" :class="`callout--${b.kind || 'info'}`">
       <TriangleAlert v-if="b.kind === 'warning'" :size="20" aria-hidden="true" />

@@ -11,7 +11,7 @@
 //   { steps: ['...', '...'] }            elenco numerato
 //   { note: '...', kind: 'info' }        riquadro (kind: 'info' | 'warning')
 //   { table: { head: [...], rows: [[...], ...] } }
-//   { map: { ... } }                     mappa con luoghi evidenziati (vedi capitolo Safezone)
+//   { map: { ... } }                     mappa con luoghi evidenziati (vedi components/RuleMap.vue)
 //
 // Per dividere un capitolo in sottocategorie si aggiunge `group: 'Nome'` al primo
 // articolo di ogni gruppo: vale anche per i successivi finché non ne inizia un altro.
@@ -21,7 +21,7 @@ export const rules = {
   title: 'Regolamento',
   subtitle: 'Regolamento generale del server Encode Roleplay',
   version: '1.0',
-  updated: '2026-10-10',
+  updated: '2026-10-14',
   // Mostra l'etichetta "Bozza" finché il testo non è approvato dallo staff
   draft: true,
 
@@ -34,44 +34,50 @@ export const rules = {
   sections: [
     {
       id: 'generale',
-      title: 'Regolamento generale',
+      title: 'Generale',
+      intro: [
+        'Il regolamento è stato scritto in modo volutamente libero e creativo: l\'obiettivo è non imporre restrizioni che limitino la creatività dei giocatori.',
+        'Si basa sul buon senso delle persone. In caso di abusi, lo staff potrà introdurre regole più restrittive. Ogni modifica verrà comunicata nei canali Discord dedicati.',
+      ],
       articles: [
         {
+          group: 'Regolamento roleplay',
           title: 'Powergame',
-          body: ['Consiste nel compiere atti umanamente impossibili, nonostante la fisica di GTA li renda possibili.'],
+          body: ['Compiere azioni impossibili per una persona reale, anche quando la fisica di GTA le rende realizzabili.'],
         },
         {
           title: 'RDM (Random Deathmatch)',
           body: [
-            'Uccidere o ferire un player senza un motivo roleplay.',
-            'È vietato provocare un player al solo scopo di scatenare una sparatoria.',
+            'Uccidere o ferire un giocatore senza un motivo roleplay.',
+            'È vietato anche provocare un giocatore con il solo scopo di far iniziare una sparatoria.',
           ],
         },
         {
           title: 'VDM (Vehicle Deathmatch)',
-          body: ['Uccidere o ferire un player con un veicolo senza un motivo roleplay.'],
+          body: ['Uccidere o ferire un giocatore con un veicolo senza un motivo roleplay.'],
         },
         {
           title: 'Fail RP',
-          body: ['Comportamenti che rompono l\'immersione o la coerenza RP (ad esempio ignorare ferite gravi o avere reazioni irrealistiche).'],
+          body: ['Comportamenti che rompono l\'immersione o la coerenza del roleplay, ad esempio ignorare ferite gravi o avere reazioni irrealistiche.'],
         },
         {
           title: 'Metagame',
-          body: ['Usare informazioni esterne al gioco (chat OOC, stream) per influenzare decisioni IC.'],
+          body: ['Usare informazioni ottenute fuori dal gioco (chat OOC, stream, Discord) per influenzare le decisioni del proprio personaggio.'],
         },
         {
           title: 'No-Fear',
-          body: ['Rifiutarsi di mostrare paura o reazioni plausibili in situazioni RP minacciose.'],
+          body: ['Non mostrare paura, o una reazione plausibile, in una situazione di pericolo.'],
         },
         {
           title: 'Revenge Kill',
-          body: ['Uccidere per vendetta fuori da un contesto RP adeguato.'],
+          body: ['Uccidere per vendetta al di fuori di un contesto roleplay adeguato.'],
         },
         {
           title: 'Combat log / Slog',
           body: [
-            'Uscire dal server durante un\'azione per sfuggire a una situazione di svantaggio, oppure entrare in gioco sapendo che è in corso un\'azione, per avvantaggiare la propria fazione.',
-            { note: 'L\'utilizzo del comando **/logout** durante un\'azione verrà considerato combat log.', kind: 'warning' },
+            '**Combat log**: uscire dal server durante un\'azione per evitare una situazione di svantaggio.',
+            '**Combat slog**: entrare in gioco sapendo che è in corso un\'azione, per avvantaggiare la propria fazione.',
+            { note: 'L\'utilizzo del comando **/logout** durante un\'azione è considerato combat slog.', kind: 'warning' },
           ],
         },
         {
@@ -80,72 +86,169 @@ export const rules = {
         },
         {
           title: 'Bunny hop',
-          body: ['Sfruttare salti o movimenti per ottenere vantaggi ingiusti in combattimento o per muoversi in modo non realistico.'],
+          body: ['Usare salti o movimenti ripetuti per ottenere un vantaggio ingiusto in combattimento, o per spostarsi in modo non realistico.'],
         },
         {
           title: 'Cop baiting',
-          body: ['Provocare intenzionalmente la polizia per ottenere una reazione senza un motivo RP valido.'],
+          body: ['Provocare intenzionalmente le forze dell\'ordine per ottenere una reazione, senza un valido motivo roleplay.'],
         },
         {
           title: 'Mix chat',
-          body: ['Mescolare chat IC e OOC o usare i canali sbagliati per scopi non appropriati.'],
+          body: ['Mescolare la chat IC e OOC, oppure usare il canale sbagliato.'],
         },
         {
+          group: 'Regolamento server',
           title: 'Linguaggio',
-          body: ['Uso di linguaggio offensivo, discriminatorio o di molestie, sia OOC sia IC, che violino le regole del server.'],
+          body: ['Sono vietati il linguaggio offensivo e discriminatorio e le molestie, sia in OOC sia in IC.'],
         },
         {
-          title: 'Cheating',
-          body: ['È vietato l\'utilizzo di software o di qualunque programma di cheating.'],
+          title: 'Cheating, trolling e molestie',
+          body: [
+            'Sono vietati:',
+            {
+              list: [
+                '**cheating**: l\'uso di software o programmi di cheating, di qualsiasi tipo;',
+                '**trolling**: **tutti** i comportamenti da troll;',
+                '**molestie**: importunare o molestare altri giocatori.',
+              ],
+            },
+            { note: 'Queste infrazioni comportano il **ban permanente**.', kind: 'warning' },
+          ],
         },
         {
-          title: 'Trolling',
-          body: ['Sono vietati **tutti** gli atteggiamenti troll.'],
+          title: 'Tortura e RP a sfondo sessuale',
+          body: [
+            'Sono vietati la tortura e il roleplay a sfondo sessuale.',
+            'Fa eccezione la tortura leggera e non disturbante, consentita nei rapimenti (vedi il capitolo [Rapimenti e ostaggi](#rapimenti)).',
+          ],
+        },
+        {
+          title: 'Ambientazione',
+          body: ['Il personaggio deve essere coerente con la città in cui è ambientato il server: Los Santos, in America.'],
         },
         {
           title: 'Tossicità',
           body: [
-            'Nel server non sono ammessi atti di tossicità. Non saranno tollerati litigi, insulti o discussioni in OOC derivanti da eventi accaduti in RP e non.',
-            'Qualora fosse necessario chiarire una situazione, il confronto dovrà avvenire in modo civile e rispettoso.',
+            'Nel server non sono ammessi atteggiamenti tossici.',
+            'Non sono tollerati litigi, insulti o discussioni in OOC nati da eventi accaduti in gioco o fuori. Se è necessario chiarire una situazione, il confronto deve avvenire in modo civile e rispettoso.',
           ],
         },
         {
           title: 'Ferite e incoscienza',
           body: [
-            'Qualora un giocatore venga atterrato, è obbligato a interpretare in modo realistico il dolore e le conseguenze delle ferite riportate.',
-            'Se il personaggio è incosciente, non potrà parlare né comunicare in alcun modo.',
-            { note: 'In caso di morte a causa di un bug è concesso chiedere il ress tramite report.', kind: 'info' },
+            'Un giocatore ferito deve interpretare in modo realistico il dolore e le conseguenze delle ferite riportate.',
+            'Un player incosciente non può parlare né comunicare in alcun modo con altri giocatori.',
+            { note: 'In caso di morte causata da un bug, è possibile chiedere il ress tramite report.', kind: 'info' },
+          ],
+        },
+        {
+          title: 'Amnesia post-morte',
+          body: [
+            'Ciò che il personaggio ricorda dipende da come si conclude la scena:',
+            {
+              table: {
+                head: ['Situazione', 'Cosa ricorda', 'Cosa non ricorda'],
+                rows: [
+                  [
+                    '**Respawn in ospedale**',
+                    'Nulla: il personaggio riparte da zero rispetto a quell\'episodio.',
+                    'Luogo, dinamica, responsabili e quanto accaduto poco prima della morte.',
+                  ],
+                  [
+                    '**Curato e rianimato dai medici**',
+                    'La dinamica generale dell\'accaduto.',
+                    'Luogo esatto, nomi, volti, vestiti, targhe e ogni altro dettaglio che permetta di identificare i responsabili.',
+                  ],
+                ],
+              },
+            },
           ],
         },
         {
           title: 'Clip durante le assistenze',
           body: [
-            'Affinché una clip possa essere considerata valida durante un\'assistenza, dovrà essere integra e priva di tagli o modifiche.',
-            'Inoltre, dovrà includere l\'audio del gioco (desktop) e l\'audio del giocatore che effettua la registrazione.',
+            'Per essere valida in un\'assistenza, una clip deve rispettare entrambi i requisiti:',
+            { list: ['essere integra, senza tagli né modifiche;', 'includere sia l\'audio del gioco (desktop) sia l\'audio del giocatore che registra.'] },
           ],
-        },
-        {
-          title: 'Lavori whitelist',
-          body: ['Un giocatore può svolgere più lavori whitelist, purché soddisfi i requisiti previsti dai rispettivi bandi e mantenga un comportamento coerente con il ruolo ricoperto.'],
         },
         {
           title: 'Loot',
           body: [
-            'Le azioni a scopo di loot sono severamente vietate.',
-            'Durante qualsiasi tipo di azione sarà consentito effettuare il loot, in caso di necessità, esclusivamente di:',
-            { list: ['munizioni;', 'cibo e acqua;', 'bende.'] },
+            'Le azioni a scopo loot sono severamente vietate.',
+            'In generale è sempre consentito lootare:',
+            { list: ['munizioni;', 'cibo;', 'acqua;', 'bende.'] },
+            'Qualsiasi altro oggetto (telefono, armi, contanti e così via) può essere preso solo con una valida motivazione RP.',
+          ],
+        },
+        {
+          title: 'Furto di veicolo di un player',
+          body: [
+            {
+              table: {
+                head: ['Veicolo', 'Regola'],
+                rows: [
+                  ['Veicoli dei giocatori', 'Il furto è consentito solo con una valida motivazione RP'],
+                  ['Veicoli delle forze dell\'ordine', 'Il furto è consentito, ma chi lo compie ne subisce le conseguenze in RP'],
+                ],
+              },
+            },
           ],
         },
         {
           title: 'Contenuti audio',
-          body: ['È vietata la riproduzione di contenuti audio, incluse canzoni o tracce musicali, che possano risultare offensivi, discriminatori, estremisti, eccessivamente volgari o comunque contrari al regolamento delle varie piattaforme di streaming.'],
+          body: ['È vietata la riproduzione di contenuti audio, comprese canzoni e tracce musicali, che siano offensivi, discriminatori, estremisti, eccessivamente volgari o contrari alle regole delle piattaforme di streaming.'],
         },
         {
           title: 'Riferimenti fuori dal gioco',
           body: [
-            'Durante qualsiasi azione IC è severamente vietato utilizzare termini o riferimenti che richiamino lo staff, Discord, ticket, assistenze o qualsiasi elemento fuori dal gioco.',
-            'Eventuali problemi tecnici o situazioni che richiedano un intervento esterno dovranno essere gestiti tramite gli appositi canali di assistenza e il sistema di report.',
-            'Solo in caso di necessità, e qualora ci si trovi in un luogo isolato lontano da altre scene RP, sarà consentito uscire temporaneamente dal personaggio per il tempo strettamente necessario a risolvere il problema.',
+            'Durante qualsiasi azione IC è severamente vietato usare termini o riferimenti allo staff, a Discord, ai ticket, alle assistenze o a qualsiasi altro elemento esterno al gioco.',
+            'I problemi tecnici e le situazioni che richiedono un intervento esterno vanno gestiti tramite i canali di assistenza e il sistema di report.',
+            'Solo in caso di necessità, e se ci si trova in un luogo isolato, lontano da altre scene roleplay, è consentito uscire temporaneamente dal personaggio per il tempo strettamente necessario a risolvere il problema.',
+          ],
+        },
+        {
+          group: 'Scene ostili',
+          title: 'Avvio delle azioni ostili',
+          body: [
+            'Prima di usare la violenza contro dei civili, o durante una rapina, l\'aggressore deve avviare una scena credibile in RP. Questo significa:',
+            {
+              steps: [
+                'fare una richiesta o una minaccia chiara, con un contesto;',
+                'lasciare alla vittima il tempo di reagire in modo realistico, **non meno di 10 secondi**.',
+              ],
+            },
+            'Anche la vittima deve rispondere alla scena in RP. Ignorarla, o reagire senza motivo, è Fail RP o No-Fear.',
+            'Se la vittima reagisce con violenza per prima, l\'aggressore può rispondere subito.',
+            { note: 'Nelle rapine, oltre ai 10 secondi, resta valida la negoziazione minima di **2 minuti**.', kind: 'info' },
+            'L\'obbligo di avviare la scena **non si applica** tra fazioni che hanno già sviluppato un conflitto in RP, né negli assalti pianificati. Anche in questi casi il motivo deve esistere in gioco prima dell\'azione.',
+          ],
+        },
+        {
+          title: 'Fear RP e valore della vita',
+          body: [
+            'Ogni personaggio deve reagire in modo coerente a una minaccia credibile. La reazione può variare in base al carattere (paura, sottomissione, trattativa, ma anche orgoglio, sfida o spavalderia), purché sia interpretata in modo realistico e coerente con la storia del personaggio.',
+            {
+              table: {
+                head: ['Comportamento consentito', 'Comportamento No-Fear'],
+                rows: [
+                  [
+                    'Rifiutarsi di collaborare',
+                    'Ignorare le armi puntate',
+                  ],
+                  [
+                    'Rispondere con una sfida',
+                    'Comportarsi come se la minaccia non esistesse',
+                  ],
+                  [
+                    'Tentare di fuggire',
+                    'Reagire in modo impossibile in netta inferiorità (ad esempio uno contro più persone armate) senza un\'opportunità concreta',
+                  ],
+                ],
+              },
+            },
+            'Chi sceglie di opporsi ne accetta le conseguenze in RP, comprese ferite gravi, rapimento o morte.',
+            { note: 'Le conseguenze subite non sono, da sole, un motivo di segnalazione. Si può segnalare solo se l\'aggressore ha violato il regolamento, ad esempio non ha avviato correttamente la scena o ha agito senza un motivo RP.', kind: 'info' },
+            'L\'orgoglio non può essere un pretesto per provocare una sparatoria senza motivo RP (vedi [RDM](#art-1-2) e [Cop baiting](#art-1-11)).',
           ],
         },
       ],
@@ -157,22 +260,22 @@ export const rules = {
         {
           title: 'VDM',
           body: [
-            'Qualora un player investa altri giocatori durante un\'azione roleplay (ad esempio per aprirsi una via di fuga o durante un inseguimento), l\'azione non sarà considerata VDM, purché sia coerente con il contesto RP e non abbia come unico scopo quello di arrecare danno.',
-            'Sono invece vietati gli investimenti effettuati esclusivamente per divertimento, per trollare o senza un valido motivo RP: questi comportamenti saranno considerati VDM e sanzionati.',
+            'Investire altri giocatori durante un\'azione roleplay (ad esempio per aprirsi una via di fuga o durante un inseguimento) non è VDM, purché sia coerente con il contesto RP e non abbia come unico scopo quello di arrecare danno.',
+            'Sono invece vietati gli investimenti compiuti per divertimento, per trollare o senza un valido motivo RP: questi comportamenti sono considerati VDM e vengono sanzionati.',
           ],
         },
         {
           title: 'Pneumatici forati',
           body: [
-            'I veicoli che subiscono la foratura di uno o più pneumatici non sono obbligati a fermarsi immediatamente: il danno subito costituisce già uno svantaggio significativo.',
-            'Se il conducente, scegliendo di proseguire con un veicolo danneggiato, provoca incidenti o danni a persone o cose, queste azioni potranno comportare conseguenze roleplay più gravi, come un aggravamento delle imputazioni o un aumento della pena detentiva.',
+            'I veicoli con uno o più pneumatici forati non sono obbligati a fermarsi immediatamente: il danno subito è già uno svantaggio significativo.',
+            'Se il conducente decide di proseguire con il veicolo danneggiato e provoca incidenti o danni a persone o cose, può andare incontro a conseguenze roleplay più gravi, come l\'aggravamento delle imputazioni o l\'aumento della pena detentiva.',
           ],
         },
         {
           title: 'Scarica di adrenalina',
           body: [
-            'Durante situazioni di forte stress, come inseguimenti o sparatorie, è consentito interpretare una temporanea scarica di adrenalina che permetta al personaggio di continuare l\'azione senza fermarsi subito per lievi ferite o dolori.',
-            'Questo principio non giustifica l\'ignorare ferite gravi o potenzialmente invalidanti, né autorizza comportamenti irrealistici o contrari al roleplay. Al termine dell\'azione il giocatore dovrà interpretare in modo coerente le conseguenze delle lesioni riportate.',
+            'In situazioni di forte stress, come inseguimenti o sparatorie, è consentito interpretare una temporanea scarica di adrenalina che permetta al personaggio di continuare l\'azione senza fermarsi subito per ferite o dolori lievi.',
+            'Questo principio non vale per ferite gravi o potenzialmente invalidanti e non autorizza comportamenti irrealistici o contrari al roleplay. Al termine dell\'azione, il giocatore deve interpretare in modo coerente le conseguenze delle ferite riportate.',
           ],
         },
       ],
@@ -184,9 +287,9 @@ export const rules = {
         {
           title: 'Personaggi separati',
           body: [
-            'Qualora un giocatore scelga di acquistare il doppio PG, dovrà considerare i due personaggi come entità completamente separate.',
-            'È severamente vietato trasferire informazioni, conoscenze o collegamenti ottenuti con un personaggio all\'altro (metagaming tra personaggi).',
-            { note: 'La violazione di questa regola comporterà provvedimenti da parte dello staff, fino alla possibile rimozione di uno dei personaggi.', kind: 'warning' },
+            'Chi acquista il doppio PG deve considerare i due personaggi come entità completamente separate.',
+            'È severamente vietato trasferire informazioni, conoscenze o collegamenti ottenuti con un personaggio all\'altro (metagame tra personaggi).',
+            { note: 'La violazione di questa regola comporta provvedimenti da parte dello staff, fino alla possibile rimozione di uno dei due personaggi.', kind: 'warning' },
           ],
         },
         {
@@ -196,8 +299,8 @@ export const rules = {
         {
           title: 'Beni e denaro',
           body: [
-            'Non è possibile trasferire beni, denaro, proprietà o qualsiasi altro tipo di vantaggio da un PG all\'altro.',
-            { note: 'Qualsiasi tentativo di aggirare questa regola verrà considerato una violazione del regolamento e potrà comportare provvedimenti, fino al possibile wipe del personaggio coinvolto.', kind: 'warning' },
+            'Non è possibile trasferire beni, denaro, proprietà o qualsiasi altro vantaggio da un PG all\'altro.',
+            { note: 'Ogni tentativo di aggirare questa regola è una violazione del regolamento e può comportare provvedimenti, fino al possibile wipe del personaggio coinvolto.', kind: 'warning' },
           ],
         },
       ],
@@ -209,23 +312,23 @@ export const rules = {
         {
           title: 'Coinvolgimento nelle azioni',
           body: [
-            'Il personale medico non è considerato una fazione neutrale e, come ogni altro gruppo presente in città, può essere coinvolto nelle azioni roleplay.',
-            'Tuttavia, è vietato rapire, ferire o uccidere membri del personale medico senza una valida motivazione IC e senza un adeguato sviluppo della storia. Ogni azione nei loro confronti dovrà essere giustificata.',
+            'Il personale medico non è una fazione neutrale e, come ogni altro gruppo presente in città, può essere coinvolto nelle azioni roleplay.',
+            'Tuttavia è vietato rapire, ferire o uccidere membri del personale medico senza una valida motivazione IC e senza un adeguato sviluppo della storia. Ogni azione nei loro confronti deve essere giustificata.',
           ],
         },
         {
           title: 'Scene con sparatorie',
-          body: ['Durante scene roleplay che possono includere sparatorie, come per esempio una rapina, il corpo medico può intervenire in prima linea, ma allo stesso tempo potrà essere colpito o preso in ostaggio dai rapinatori.'],
+          body: ['Nelle scene roleplay che possono includere sparatorie, come una rapina, il personale medico può intervenire in prima linea, ma può anche essere colpito o preso in ostaggio dai rapinatori.'],
         },
         {
           title: 'Controlli e interventi',
-          body: ['Se il medico ritiene che siano necessari ulteriori controlli in ospedale e/o un intervento d\'urgenza, il paziente non potrà rifiutarsi.'],
+          body: ['Se il medico ritiene necessari ulteriori controlli in ospedale o un intervento d\'urgenza, il paziente non può rifiutarsi.'],
         },
         {
           title: 'Cure sotto banco',
           body: [
-            'È consentito al personale medico effettuare cure o fornire medicinali sotto banco, a condizione che questo comportamento venga adeguatamente interpretato in RP.',
-            'Qualora l\'attività venga scoperta, le forze dell\'ordine potranno avviare le opportune indagini e procedere con eventuali conseguenze legali, inclusi processi o arresti, qualora sussistano le prove e i presupposti necessari.',
+            'Il personale medico può effettuare cure o fornire medicinali sotto banco, a condizione che il comportamento sia interpretato in modo adeguato in RP.',
+            'Se l\'attività viene scoperta, le forze dell\'ordine possono avviare le indagini e procedere con le conseguenze legali, inclusi processi o arresti, se ci sono prove e presupposti sufficienti.',
           ],
         },
       ],
@@ -233,29 +336,33 @@ export const rules = {
     {
       id: 'assalti',
       title: 'Assalti',
-      intro: ['Assalti alle centrali delle forze dell\'ordine e alle case delle fazioni criminali.'],
+      intro: ['Regole per gli assalti alle centrali delle forze dell\'ordine e alle case delle fazioni criminali.'],
       articles: [
         {
           group: 'Regole generali',
           title: 'Notifica e approvazione',
           body: [
-            'Per effettuare un assalto **non** serve l\'approvazione di un ticket, così da permettere azioni furtive e a sorpresa.',
-            'È però obbligatorio aprire un ticket di notifica nella sezione management almeno **3 ore** prima dell\'inizio dell\'azione, indicando chiaramente le motivazioni dell\'assalto. Il canale è visibile solo al management e serve a informarlo dell\'evento, garantendo la presenza di almeno uno staffer neutrale.',
+            'Per effettuare un assalto **non** è necessaria l\'approvazione di un ticket, così da permettere azioni furtive e a sorpresa.',
+            'È però obbligatorio aprire un ticket di notifica nella sezione management almeno **3 ore** prima dell\'inizio dell\'azione, indicando chiaramente le motivazioni dell\'assalto. Il canale è visibile solo al management e serve a informarlo dell\'evento, per garantire la presenza di almeno uno staffer neutrale.',
           ],
         },
         {
           title: 'Valutazione della direzione',
-          body: ['Se, dopo aver letto le motivazioni nel ticket, la direzione ritiene il motivo non sufficientemente valido, può imporre l\'annullamento dell\'azione, ma solo se questa non è ancora iniziata. In caso contrario, l\'azione è considerata valida.'],
+          body: ['Se, dopo aver letto le motivazioni indicate nel ticket, la direzione le ritiene insufficienti, può annullare l\'azione, ma solo se non è ancora iniziata. In caso contrario, l\'azione è considerata valida.'],
         },
         {
           title: 'Equipaggiamento',
           body: ['Durante gli assalti non ci sono limitazioni su armi e abbigliamento.'],
         },
         {
+          title: 'Numero di partecipanti',
+          body: ['In qualsiasi tipo di assalto gli assalitori possono essere **al massimo 20**. I difensori non hanno limiti.'],
+        },
+        {
           title: 'Registrazione video',
           body: [
-            'In ogni assalto almeno un assalitore deve registrare un video completo dell\'intera azione. La clip deve partire dal momento in cui l\'assalitore e il suo gruppo iniziano a organizzarsi e arrivare fino alla conclusione definitiva dell\'assalto, senza interruzioni né modifiche.',
-            'La registrazione va conservata per **48 ore** e messa a disposizione del management per eventuali controlli o verifiche.',
+            'In ogni assalto almeno un assalitore deve registrare un video completo dell\'intera azione. La registrazione deve iniziare quando l\'assalitore e il suo gruppo cominciano a organizzarsi e arrivare fino alla conclusione definitiva dell\'assalto, senza interruzioni né modifiche.',
+            'La registrazione deve essere conservata per **48 ore** e messa a disposizione del management per eventuali controlli o verifiche.',
           ],
         },
         {
@@ -266,24 +373,48 @@ export const rules = {
           group: 'Assalti alle centrali delle forze dell\'ordine',
           title: 'Reparti speciali',
           body: [
-            'Chi decide di assaltare una centrale deve tenere conto della presenza di reparti speciali (come la SWAT) al suo interno.',
-            { note: 'Un assalto non organizzato o svolto in modo superficiale sarà considerato no-fear estremo.', kind: 'warning' },
+            'Chi intende assaltare una centrale deve tenere conto della presenza al suo interno di reparti speciali, come la SWAT.',
+            { note: 'Un assalto non organizzato, o svolto in modo superficiale, è considerato no-fear estremo.', kind: 'warning' },
           ],
         },
         {
           title: 'Loot',
-          body: ['Negli assalti alle centrali vale la regola generale sul loot dei giocatori. In più, è consentito sottrarre agli agenti le chiavi delle manette, se necessario ai fini dell\'azione.'],
+          body: ['Negli assalti alle centrali si applicano le [regole sul loot](#art-1-21) del regolamento server. È inoltre consentito sottrarre agli agenti le chiavi delle manette, se necessario ai fini dell\'azione.'],
         },
         {
           title: 'Forze dell\'ordine minime',
-          body: ['Per assaltare una centrale è necessario un minimo di **7** agenti in servizio.'],
+          body: ['Per assaltare una centrale è necessaria la presenza di almeno **7** agenti delle forze dell\'ordine.'],
         },
         {
           group: 'Assalti alle case fazione',
           title: 'Verifica preventiva',
           body: [
-            'Prima di assaltare una casa fazione, le forze dell\'ordine devono valutare il numero di criminali presenti. L\'assalto è possibile solo se i membri sono più di **5**.',
-            'I metodi per verificarlo si decidono in fase di pianificazione (ad esempio un sorvolo in elicottero o un travestimento da fattorino delle pizze).',
+            'Prima di assaltare una casa fazione, le forze dell\'ordine devono verificare il numero di criminali presenti. L\'assalto è possibile solo se i membri sono più di **5**.',
+            'I metodi di verifica vengono decisi in fase di pianificazione (ad esempio un sorvolo in elicottero o un travestimento da fattorino).',
+          ],
+        },
+        {
+          title: 'Esito negativo per i difensori',
+          body: [
+            'Se l\'assalto ha esito negativo per i difensori, questi possono ritirarsi e cambiare casa fazione. È necessario aprire un ticket **a conclusione dell\'assalto**; la nuova casa fazione sarà operativa dopo **2-4 giorni**.',
+          ],
+        },
+        {
+          group: 'In sintesi',
+          title: 'Requisiti a confronto',
+          body: [
+            {
+              table: {
+                head: ['', 'Centrale', 'Casa fazione'],
+                rows: [
+                  ['**Condizione per assaltare**', 'Almeno 7 agenti delle forze dell\'ordine', 'Più di 5 membri della fazione'],
+                  ['**Assalitori**', 'Massimo 20', 'Massimo 20'],
+                  ['**Notifica al management**', 'Ticket almeno 3 ore prima', 'Ticket almeno 3 ore prima'],
+                  ['**Loot**', 'Regole generali e chiavi delle manette', 'Regole generali'],
+                  ['**Registrazione**', 'Obbligatoria, da conservare per 48 ore', 'Obbligatoria, da conservare per 48 ore'],
+                ],
+              },
+            },
           ],
         },
       ],
@@ -293,41 +424,15 @@ export const rules = {
       title: 'Safezone',
       articles: [
         {
-          title: 'Nessuna zona semi-safe',
-          body: ['Nel server non sono presenti zone semi-safe: ogni azione dovrà tenere in considerazione il luogo in cui ci si trova.'],
+          title: 'Nessuna zona safe',
+          body: ['Nel server non sono presenti zone safe o semi-safe: ogni azione deve tenere conto del luogo in cui viene svolta.'],
         },
         {
-          title: 'Nelle zone safe',
-          body: ['All\'interno di una zona safe è vietato avviare qualsiasi tipo di azione. Allo stesso tempo, non è consentito utilizzare le zone safe come riparo.'],
-        },
-        {
-          title: 'Elenco delle zone safe',
+          title: 'Luoghi sensibili',
           body: [
-            'Le zone safe sono:',
-            { list: ['Garage centrale', 'Punto di spawn'] },
-            {
-              map: {
-                title: 'Mappa delle zone safe',
-                image: '/img/mappa-gta.webp',
-                // Area del mondo coperta dall'immagine (coordinate di gioco).
-                // Mappa Atlas da github.com/meesvrh/GTAV-Map-Tiles, ritagliata
-                bounds: { x: [-3972, 5198], y: [-3888, 8185] },
-                // Inquadrature in rapporto 5:4
-                views: [
-                  { id: 'ls', label: 'Los Santos', x: [-1950, 1350], y: [-1800, 840] },
-                  { id: 'all', label: 'Tutta la mappa', x: [-6933, 8159], y: [-3888, 8185] },
-                ],
-                kinds: {
-                  garage: { label: 'Garage centrale', icon: 'car', color: 'blue' },
-                  spawn: { label: 'Punto di spawn', icon: 'pin', color: 'green' },
-                },
-                // Posizioni in coordinate di gioco (x, y), come da /coords o vMenu
-                places: [
-                  { kind: 'garage', name: 'Garage centrale', x: 215, y: -810 },
-                  { kind: 'spawn', name: 'Punto di spawn', x: -269, y: -955 },
-                ],
-              },
-            },
+            'Le azioni svolte nei seguenti luoghi devono essere ben organizzate:',
+            { list: ['Centrale di polizia;', 'Municipio.'] },
+            { note: 'In caso contrario sono considerate no-fear estremo.', kind: 'warning' },
           ],
         },
       ],
@@ -338,19 +443,33 @@ export const rules = {
       articles: [
         {
           title: 'Numero di giocatori',
-          body: ['Non è previsto un numero massimo di giocatori per le azioni freeroam.'],
+          body: [
+            'Per le azioni freeroam non è previsto un numero massimo fisso di giocatori, ma il numero di criminali non può superare quello totale delle forze dell\'ordine in servizio.',
+            { note: 'Si considerano tutti i poliziotti presenti, visibili dalla scoreboard, e non solo quelli che intervengono.', kind: 'info' },
+          ],
         },
         {
           title: 'Mezzi speciali',
-          body: ['L\'utilizzo di mezzi speciali, come i blindati, è consentito esclusivamente in situazioni che ne giustifichino l\'impiego, come inseguimenti che riguardano veicoli pesanti o conflitti armati con armi di grosso calibro.'],
+          body: ['I mezzi speciali, come i blindati, possono essere usati solo in situazioni che lo giustificano, ad esempio inseguimenti con veicoli pesanti o conflitti armati con armi di grosso calibro.'],
         },
         {
           title: 'Elicottero',
-          body: ['Dopo **10 minuti** consecutivi di inseguimento sarà consentito l\'impiego dell\'elicottero da parte delle forze dell\'ordine.'],
+          body: ['Dopo **10 minuti** consecutivi di inseguimento, le forze dell\'ordine possono usare l\'elicottero.'],
         },
         {
           title: 'Manovre PIT/BOX',
-          body: ['La polizia è autorizzata a effettuare manovre PIT/BOX durante gli inseguimenti. Ogni operatore dovrà tenere conto delle possibili conseguenze delle proprie azioni: eventuali danni causati a veicoli o persone potranno portare a un processo o ad altre conseguenze IC.'],
+          body: ['La polizia è autorizzata a eseguire manovre PIT/BOX durante gli inseguimenti. Ogni operatore deve valutare le conseguenze delle proprie azioni: eventuali danni a veicoli o persone possono portare a un processo o ad altre conseguenze IC.'],
+        },
+        {
+          title: 'Fine dell\'inseguimento',
+          body: ['Un inseguimento è considerato perso quando la polizia perde il sospettato. La polizia può comunque proseguire le indagini.'],
+        },
+        {
+          title: 'Nascondigli e speed unit',
+          body: [
+            'Durante un inseguimento ci si può nascondere in qualsiasi luogo, tranne sfruttando bug.',
+            'Con le supercar è possibile usare la speed unit in tutti gli inseguimenti, non solo nelle rapine. Per il resto i giocatori sono liberi di usare la fantasia, senza ulteriori limitazioni.',
+          ],
         },
       ],
     },
@@ -361,19 +480,416 @@ export const rules = {
         {
           title: 'Equipaggiamento',
           body: [
-            'Le forze dell\'ordine dovranno adeguare il proprio equipaggiamento e l\'utilizzo delle armi alla situazione, tenendo conto del livello di minaccia rappresentato dai criminali.',
-            'I criminali, invece, non avranno limitazioni specifiche sull\'armamento, fermo restando il rispetto del regolamento generale e del buon senso RP.',
+            'Le forze dell\'ordine devono adeguare equipaggiamento e uso delle armi alla situazione, in base al livello di minaccia rappresentato dai criminali.',
+            'I criminali non hanno limitazioni specifiche sull\'armamento, fermo restando il rispetto del regolamento roleplay e del buon senso.',
           ],
         },
         {
           title: 'Errori operativi',
-          body: ['Le forze dell\'ordine decidono come agire in base alla situazione che si trovano davanti. In caso di errori operativi non derivanti da violazioni del regolamento, se ne subiranno le conseguenze in gioco, senza l\'intervento di uno staffer.'],
+          body: ['Le forze dell\'ordine decidono come agire in base alla situazione. In caso di errori operativi che non derivano da violazioni del regolamento, ne subiscono le conseguenze in gioco, senza l\'intervento di uno staffer.'],
+        },
+        {
+          title: 'Corruzione',
+          body: [
+            'Per essere corrotti non è necessario aprire un ticket. Gli atti di corruzione possono andare da piccole azioni a vere e proprie infiltrazioni.',
+            'Se un agente corrotto viene scoperto, si procede con un processo in RP.',
+          ],
         },
       ],
     },
-    { id: 'rapine', title: 'Rapine', pending: true, articles: [] },
-    { id: 'droghe', title: 'Droghe', pending: true, articles: [] },
-    { id: 'permadeath', title: 'Permadeath', pending: true, articles: [] },
-    { id: 'elicotteri', title: 'Elicotteri', pending: true, articles: [] },
+    {
+      id: 'locali',
+      title: 'Locali',
+      articles: [
+        {
+          title: 'Conto dell\'attività',
+          body: ['All\'interno del locale non è possibile prelevare né depositare denaro sul conto dell\'attività.'],
+        },
+        {
+          title: 'Pagamenti e incassi',
+          body: [
+            {
+              table: {
+                head: ['Tipo di pagamento', 'Cosa serve', 'Procedura'],
+                rows: [
+                  ['**Carta**', 'Il POS, da ritirare nell\'apposita sezione della banca', 'L\'importo viene accreditato direttamente sul conto'],
+                  ['**Contanti**', 'Il registratore di cassa', 'Il denaro va inserito nel registratore di cassa e portato in banca, quando il proprietario preferisce'],
+                ],
+              },
+            },
+          ],
+        },
+        {
+          title: 'Trasporto sicuro',
+          body: ['È possibile stipulare un contratto tra attività e agenzia di sicurezza per trasportare il denaro in banca con maggiore sicurezza.'],
+        },
+        {
+          title: 'Autorizzazioni',
+          body: ['Ogni attività deve recarsi al comune per ottenere le autorizzazioni e i permessi necessari **entro 2 giorni** dall\'apertura del locale.'],
+        },
+      ],
+    },
+    {
+      id: 'rapine',
+      title: 'Rapine',
+      articles: [
+        {
+          group: 'Regole generali',
+          title: 'Tetto massimo di giocatori',
+          body: [
+            'Nelle rapine vale lo stesso tetto del [freeroam](#freeroam): il numero di criminali non può superare quello totale delle forze dell\'ordine in servizio (visibile dalla scoreboard). I poliziotti possono superare il numero dei criminali di **al massimo 2 unità**.',
+            {
+              table: {
+                head: ['Categoria', 'Limite'],
+                rows: [
+                  ['**Criminali**', 'Non più delle forze dell\'ordine in servizio'],
+                  ['**Poliziotti**', 'Al massimo il numero dei criminali + 2'],
+                ],
+              },
+            },
+            { note: 'Si considerano i criminali visti dagli agenti, non quelli effettivamente presenti alla rapina.', kind: 'info' },
+          ],
+        },
+        {
+          title: 'Rinforzi',
+          body: ['Sia i criminali sia le forze di polizia possono richiedere supporto in qualsiasi momento durante il furto. Se i criminali chiamano rinforzi, il numero massimo di poliziotti viene aggiornato di conseguenza, mantenendo sempre il limite di 2 unità in più rispetto al totale dei criminali coinvolti, rinforzi compresi.'],
+        },
+        {
+          title: 'Agenti minimi',
+          body: [
+            'Per effettuare un furto è necessario un numero minimo di agenti in servizio:',
+            {
+              table: {
+                head: ['Tipo di furto', 'Agenti minimi'],
+                rows: [
+                  ['Negozietto', '2'],
+                  ['Post locker', '2'],
+                  ['NPC', '2'],
+                  ['Borse nei veicoli', '2'],
+                ],
+              },
+            },
+          ],
+        },
+        {
+          title: 'Veicoli',
+          body: ['Non ci sono limitazioni sui veicoli: le forze dell\'ordine si adeguano a quelli dei criminali. Con le supercar è possibile usare la speed unit.'],
+        },
+        {
+          title: 'Negoziazione',
+          body: [
+            'I criminali devono negoziare per **almeno 2 minuti**: non è possibile iniziare una sparatoria non appena arrivano i poliziotti.',
+            'Gli agenti devono fare il possibile per evitare le sparatorie.',
+          ],
+        },
+        {
+          title: 'Equipaggiamento',
+          body: [
+            'L\'equipaggiamento della polizia deve essere proporzionato a quello dei criminali. I criminali non hanno limiti su armi e abbigliamento.',
+            'Se i criminali usano armi automatiche, la LSPD può richiedere l\'intervento della SWAT o di altre forze speciali.',
+          ],
+        },
+        {
+          title: 'Ostaggi NPC',
+          body: ['Se i criminali tengono degli NPC come ostaggi, la polizia deve considerarli veri civili e fare il possibile per salvarli.'],
+        },
+        {
+          title: 'Intervallo tra le rapine',
+          body: [
+            'Tra una rapina (come negozietti, locali, Fleeca e simili) e la successiva devono passare **30 minuti**. È invece possibile effettuare piccoli furti di seguito.',
+            { note: 'Le rapine maggiori (Fleeca, gioielleria, banca centrale e simili) non saranno presenti all\'apertura del server e verranno introdotte a breve con un aggiornamento.', kind: 'info' },
+          ],
+        },
+        {
+          group: 'Rapine ai locali',
+          title: 'Furti nei locali',
+          body: ['È possibile effettuare furti e rapine all\'interno di locali e attività gestite da giocatori. I gestori possono rivolgersi a un\'agenzia di sicurezza privata per ridurre il rischio di essere rapinati.'],
+        },
+        {
+          title: 'Cosa si può rubare',
+          body: ['Nelle rapine ai locali è possibile rubare solo il registratore di cassa. Non è possibile far prelevare il denaro dal conto dell\'azienda.'],
+        },
+      ],
+    },
+    {
+      id: 'rapimenti',
+      title: 'Rapimenti e ostaggi',
+      articles: [
+        {
+          title: 'Motivazione del rapimento',
+          body: [
+            'Il rapimento di un giocatore è un atto estremo e richiede una valida motivazione RP, coerente con la storia dei personaggi. È vietato rapire per divertimento o senza una storia che lo giustifichi.',
+            'Se l\'unico motivo è il riscatto, deve esserci una reale difficoltà economica del personaggio, raccontata e mostrata in RP. Per le segnalazioni sono sufficienti gli screenshot.',
+          ],
+        },
+        {
+          title: 'Ostaggio come scudo',
+          body: ['Usare un ostaggio come scudo per fuggire è consentito, ma non è una motivazione valida per rapinare chi svolge un lavoro non whitelist.'],
+        },
+        {
+          title: 'Trattativa con le forze dell\'ordine',
+          body: ['Se i rapitori chiedono un riscatto allo Stato, la contrattazione con le forze dell\'ordine è **obbligatoria**. Quando la questione riguarda gang o privati, le forze dell\'ordine possono essere escluse.'],
+        },
+        {
+          title: 'Durata massima',
+          body: [
+            {
+              table: {
+                head: ['Situazione', 'Durata massima'],
+                rows: [
+                  ['Con contrattazione in corso', '45 minuti'],
+                  ['Senza contrattazione', '30 minuti'],
+                ],
+              },
+            },
+            'Superati questi limiti, l\'ostaggio deve essere rilasciato oppure la scena deve concludersi con un\'altra soluzione RP.',
+          ],
+        },
+        {
+          title: 'Tetti massimi del riscatto',
+          body: [
+            {
+              table: {
+                head: ['Categoria', 'Riscatto massimo'],
+                rows: [
+                  ['Civile', '50.000$'],
+                  ['Agente o medico base', '70.000$'],
+                  ['Agente o medico graduato', '100.000$'],
+                  ['Capo della polizia', '300.000$'],
+                  ['Sindaco', '400.000$'],
+                ],
+              },
+            },
+            'Per le categorie non elencate (imprenditori, membri di fazioni) vale il tetto previsto per i civili.',
+          ],
+        },
+        {
+          title: 'Provenienza del denaro',
+          body: [
+            'Il denaro del riscatto non può essere generato con il comando give né richiesto allo staff.',
+            {
+              table: {
+                head: ['Chi paga', 'Provenienza del denaro'],
+                rows: [
+                  ['Stato', 'Conto dello Stato'],
+                  ['Privato', 'Denaro del privato'],
+                  ['Fazione (gang o mafia)', 'Risparmi della fazione'],
+                ],
+              },
+            },
+          ],
+        },
+        {
+          title: 'Trattamento del rapito',
+          body: [
+            'Al rapito si possono applicare pressioni, minacce credibili e una tortura leggera, purché non disturbante.',
+            { note: 'Sono vietate la violenza prolungata, la tortura grave e qualsiasi forma di violenza sessuale.', kind: 'warning' },
+          ],
+        },
+        {
+          title: 'Oggetti del rapito',
+          body: ['Gli oggetti presi a una persona rapita vanno restituiti al momento del rilascio, salvo valida motivazione RP per tenerli.'],
+        },
+        {
+          title: 'Finti ostaggi',
+          body: ['Sono consentiti ostaggi concordati tra giocatori. Se la polizia sospetta che un ostaggio sia finto, decide in quel momento come comportarsi. Se l\'ipotesi si rivela sbagliata, gli agenti coinvolti subiscono un processo in RP.'],
+        },
+        {
+          title: 'Cosa ricorda il rapito',
+          body: [
+            'Un personaggio ricorda ciò che vive.',
+            {
+              table: {
+                head: ['Situazione', 'Cosa ricorda'],
+                rows: [
+                  ['Rapito non ucciso', 'Tutto ciò che è accaduto'],
+                  ['Non incappucciato (o simile) durante il trasporto', 'Anche il luogo di prigionia'],
+                  ['Incappucciato (o simile) durante il trasporto', 'Non ricorda il luogo di prigionia'],
+                  ['Morto', 'Si applica l\'[amnesia post-morte](#art-1-19)'],
+                ],
+              },
+            },
+          ],
+        },
+        {
+          title: 'Intervento della SWAT',
+          body: ['Se la trattativa fallisce o l\'incolumità degli ostaggi è in pericolo, le forze dell\'ordine possono richiedere l\'intervento della SWAT.'],
+        },
+      ],
+    },
+    {
+      id: 'lavori',
+      title: 'Lavori',
+      articles: [
+        {
+          title: 'Più lavori',
+          body: ['Un giocatore può lavorare in più attività, whitelist e non, se rispetta i requisiti dei rispettivi bandi e mantiene un comportamento coerente con il ruolo ricoperto.'],
+        },
+        {
+          title: 'Lavori non whitelist',
+          body: [
+            'Come per i [medici](#medici), non è possibile rapinare chi svolge un lavoro non whitelist senza una valida motivazione.',
+            { note: 'Rapire una persona solo per usarla come ostaggio non è una motivazione valida.', kind: 'warning' },
+          ],
+        },
+      ],
+    },
+    {
+      id: 'droghe',
+      title: 'Droghe',
+      articles: [
+        {
+          title: 'Coltivazione',
+          body: ['Il sistema droghe di Encode Roleplay non prevede un punto di raccolta fisso, ma una coltivazione dinamica.'],
+        },
+        {
+          title: 'Vendita autorizzata',
+          body: ['In game sono disponibili diversi locali autorizzati alla vendita. Se vengono scoperti a commettere illeciti, il sindaco può revocare l\'autorizzazione all\'attività.'],
+        },
+      ],
+    },
+    {
+      id: 'permadeath',
+      title: 'Permadeath',
+      articles: [
+        {
+          title: 'Procedura',
+          body: [
+            {
+              steps: [
+                'Aprire un ticket nella categoria corretta sul nostro Discord, fornendo tutte le motivazioni.',
+                'Attendere l\'accettazione: solo dopo si può procedere con il permadeath.',
+                'Durante l\'azione sarà presente uno staffer in modalità spectator, che confermerà se tutto è stato eseguito correttamente.',
+              ],
+            },
+          ],
+        },
+        {
+          title: 'Dopo il permadeath',
+          body: ['Dopo un permadeath non è più possibile accedere con quel personaggio, che viene eliminato subito dopo.'],
+        },
+      ],
+    },
+    {
+      id: 'mafie-gang',
+      title: 'Mafie e gang',
+      articles: [
+        {
+          title: 'Limite di membri',
+          body: [
+            {
+              table: {
+                head: ['Fazione', 'Membri massimi'],
+                rows: [
+                  ['Mafia', '25'],
+                  ['Gang', '15'],
+                ],
+              },
+            },
+          ],
+        },
+        {
+          title: 'Reputazione',
+          body: ['Non esistono fazioni criminali intoccabili: la reputazione si costruisce in game, gradualmente.'],
+        },
+        {
+          title: 'Discrezione delle mafie',
+          body: ['Le mafie devono fare il possibile per restare nascoste e non farsi conoscere dalle forze dell\'ordine.'],
+        },
+        {
+          title: 'Conflitti tra fazioni',
+          body: ['Se una fazione criminale vuole attaccarne un\'altra, valgono le regole del capitolo [Assalti](#assalti), in particolare quelle sugli [assalti alle case fazione](#art-5-10).'],
+        },
+        {
+          title: 'Storia della fazione',
+          body: ['Ogni fazione deve avere una storia, che deve essere sempre rispettata. I vertici devono prendere decisioni e compiere azioni coerenti con lo stile roleplay della storia scelta (ad esempio, una fazione basata su una famiglia messicana agisce secondo quello stile).'],
+        },
+        {
+          title: 'Territorio',
+          body: [
+            'Se qualcuno entra nel territorio di una fazione criminale, la fazione può sparare liberamente solo se si tratta di altre fazioni o della polizia.',
+            'Per i civili valgono le regole ordinarie (vedi [Avvio delle azioni ostili](#art-1-25)). In ogni caso restano validi il buon senso e le conseguenze in RP delle proprie azioni.',
+          ],
+        },
+      ],
+    },
+    {
+      id: 'warn',
+      title: 'Warn e sanzioni',
+      articles: [
+        {
+          group: 'Escalation delle sanzioni',
+          title: 'Warn e last chance',
+          body: [
+            'I warn 1, 2 e 3 possono essere rimossi dallo staff, a sua discrezione, a partire da **7 giorni** dopo l\'assegnazione.',
+            'Al raggiungimento di 3 warn, lo staff decide a sua discrezione se assegnare il last chance o il ban di 24 ore. Il last chance è un ultimo avvertimento: il giocatore resta a 3 warn e alla prossima infrazione riceve il ban di 24 ore.',
+          ],
+        },
+        {
+          title: 'Ban progressivi',
+          body: [
+            {
+              table: {
+                head: ['Ultima sanzione', 'Nuova infrazione entro', 'Sanzione'],
+                rows: [
+                  ['3 warn (o last chance)', 'Alla prossima infrazione', 'Ban di 24 ore'],
+                  ['Ban di 24 ore', '1 mese dalla scadenza del ban', 'Ban di 7 giorni'],
+                  ['Ban di 7 giorni', '2 mesi dalla scadenza del ban', '**Ban permanente**'],
+                ],
+              },
+            },
+          ],
+        },
+        {
+          title: 'Azzeramento dei ban',
+          body: [
+            'I ban si azzerano se non vengono commesse nuove infrazioni. Il conteggio parte dalla scadenza del ban:',
+            {
+              table: {
+                head: ['Ban', 'Si azzera dopo'],
+                rows: [
+                  ['24 ore', '1 mese'],
+                  ['7 giorni', '2 mesi'],
+                ],
+              },
+            },
+            'Il giocatore torna così al conteggio dei warn, ripartendo da warn 1.',
+          ],
+        },
+        {
+          title: 'Infrazioni gravi',
+          body: [
+            'Le azioni gravi, come trolling, cheating e molestie, comportano direttamente il **ban permanente**, senza passare dai warn.',
+          ],
+        },
+        {
+          group: 'Contestare un warn',
+          title: 'Rivalutazione',
+          body: [
+            'È possibile chiedere la rivalutazione di un warn **entro 7 giorni** dall\'assegnazione, aprendo un ticket. La richiesta viene valutata da uno staffer diverso da quello che ha assegnato il warn.',
+            { note: 'La rivalutazione non è disponibile per tutti i warn: solo se si ritiene che lo staffer abbia sbagliato, oppure se emergono nuove prove a propria difesa.', kind: 'info' },
+          ],
+        },
+        {
+          title: 'Rimozione dopo un mese',
+          body: ['Dopo un mese dal ricevimento di un warn è possibile aprire un ticket per chiederne la rimozione, perché lo staffer che lo ha assegnato potrebbe non essere più presente. La richiesta viene valutata dallo staffer che ha assegnato il warn oppure da un moderatore o un admin.'],
+        },
+        {
+          title: 'Tempi a confronto',
+          body: [
+            {
+              table: {
+                head: ['Richiesta', 'Quando', 'Chi valuta'],
+                rows: [
+                  ['Rimozione dei warn 1, 2 e 3', 'Da 7 giorni dall\'assegnazione', 'Lo staff, a sua discrezione'],
+                  ['Rivalutazione', 'Entro 7 giorni', 'Uno staffer diverso da quello che ha assegnato il warn'],
+                  ['Rimozione tramite ticket', 'Dopo 1 mese', 'Chi ha assegnato il warn, oppure un moderatore o un admin'],
+                ],
+              },
+            },
+          ],
+        },
+      ],
+    },
   ],
 }

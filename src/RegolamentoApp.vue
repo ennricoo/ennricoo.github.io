@@ -42,7 +42,7 @@ const blockText = (b) =>
     : b.table ? [...b.table.head, ...b.table.rows.flat()].join(' ')
     : b.map ? b.map.places.map((p) => p.name).join(' ')
     : ''
-const plain = (s) => s.replace(/\*\*/g, '').toLowerCase()
+const plain = (s) => s.replace(/\[([^\]]+)\]\(#[^)]+\)/g, '$1').replace(/\*\*/g, '').toLowerCase()
 const articleText = (a) => plain([a.group ?? '', a.title, ...a.body.map(blockText)].join(' '))
 
 /* ---------- Capitolo aperto: uno alla volta, come una documentazione ---------- */
@@ -202,6 +202,8 @@ const highlight = async (id) => {
   clearTimeout(flashTimer)
   flashTimer = setTimeout(() => { flash.value = '' }, 2600)
 }
+// Collegamento dentro il testo di un articolo ([testo](#id))
+const onXref = (e) => open(e.detail)
 const fromHash = () => {
   const id = decodeURIComponent(location.hash.slice(1))
   if (sectionOf(id)) open(id, { push: false })
@@ -367,6 +369,8 @@ const onWheel = (e) => {
   if (side) {
     const canScroll = e.deltaY < 0 ? side.scrollTop > 0 : side.scrollTop + side.clientHeight < side.scrollHeight - 1
     if (canScroll) return
+    // l'indice scorre davvero ma è arrivato al limite: si ferma, senza cambiare capitolo
+    if (side.scrollHeight > side.clientHeight + 1) { e.preventDefault(); return }
   }
   // L'indice è fermo fuori dal pannello: sopra di esso la rotellina scorre il testo, mai la pagina
   if (!snapping && panel() && scrollY >= docY() - 1 && e.target.closest?.('.rg-side')) {
@@ -439,6 +443,12 @@ const onScrollSettle = () => {
   settleTimer = setTimeout(settle, 140)
 }
 const hasScrollEnd = typeof window !== 'undefined' && 'onscrollend' in window
+// Su desktop la pagina non deve scorrere oltre il pannello: selezionando il testo
+// il browser può spostarla di qualche pixel (la differenza è di ~1px con l'arrotondamento)
+const clampPage = () => {
+  const y = docY()
+  if (panel() && scrollY > y) scrollTo(0, y)
+}
 
 /* ---------- Indice su mobile ---------- */
 const sheetOpen = ref(false)
@@ -489,7 +499,9 @@ onMounted(() => {
   }
   collect()
   window.addEventListener('popstate', fromHash)
+  window.addEventListener('rg-open', onXref)
   window.addEventListener('scroll', track, { passive: true })
+  window.addEventListener('scroll', clampPage, { passive: true })
   window.addEventListener('resize', track, { passive: true })
   window.addEventListener('keydown', onKey)
   window.addEventListener('keydown', onSnapKey)
@@ -509,7 +521,9 @@ onBeforeUnmount(() => {
   window.removeEventListener('touchend', onTouchEnd)
   window.removeEventListener(hasScrollEnd ? 'scrollend' : 'scroll', hasScrollEnd ? settle : onScrollSettle)
   window.removeEventListener('popstate', fromHash)
+  window.removeEventListener('rg-open', onXref)
   window.removeEventListener('scroll', track)
+  window.removeEventListener('scroll', clampPage)
   window.removeEventListener('resize', track)
   window.removeEventListener('keydown', onKey)
 })
@@ -1236,13 +1250,21 @@ input[type='search']::-webkit-search-cancel-button { display: none; }
 }
 .art-body > :deep(* + *) { margin-top: 1em; }
 .art-body :deep(strong) { color: #f0f1f4; font-weight: 600; }
+.art-body :deep(a.xref) {
+  color: var(--accent);
+  text-decoration: underline;
+  text-decoration-color: rgba(138, 169, 255, 0.4);
+  text-underline-offset: 0.2em;
+  transition: color var(--dur) var(--ease), text-decoration-color var(--dur) var(--ease);
+}
+.art-body :deep(a.xref:hover) { color: #c3d3ff; text-decoration-color: currentColor; }
 .art-body :deep(ul) { padding-left: 1.25em; }
 .art-body :deep(ul li) { padding-left: 0.2em; }
 .art-body :deep(ul li + li) { margin-top: 0.4em; }
 .art-body :deep(ul li::marker) { color: var(--ink-3); }
 .art-body :deep(.steps) { list-style: none; padding: 0; display: grid; gap: 0.5em; }
 .art-body :deep(.steps li) { display: flex; align-items: baseline; gap: 0.75em; }
-.art-body :deep(.steps li span) {
+.art-body :deep(.steps li > span:first-child) {
   flex: none;
   display: grid; place-items: center;
   width: 1.6em; height: 1.6em;
