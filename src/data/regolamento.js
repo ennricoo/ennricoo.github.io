@@ -23,7 +23,7 @@ export const rules = {
   version: '1.0',
   updated: '2026-10-14',
   // Mostra l'etichetta "Bozza" finché il testo non è approvato dallo staff
-  draft: true,
+  draft: false,
 
   // Mostrati nell'apertura della pagina
   intro: [
