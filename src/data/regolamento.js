@@ -828,38 +828,40 @@ export const rules = {
         {
           title: 'Ban progressivi',
           body: [
+            'Dopo i 3 warn, ogni nuova infrazione commessa entro il tempo indicato comporta un ban più lungo del precedente:',
             {
               table: {
-                head: ['Ultima sanzione', 'Nuova infrazione entro', 'Sanzione'],
+                head: ['Sanzione attuale', 'Se commetti un\'altra infrazione', 'Ricevi'],
                 rows: [
-                  ['3 warn (o last chance)', 'Alla prossima infrazione', 'Ban di 24 ore'],
-                  ['Ban di 24 ore', '1 mese dalla scadenza del ban', 'Ban di 7 giorni'],
-                  ['Ban di 7 giorni', '2 mesi dalla scadenza del ban', '**Ban permanente**'],
+                  ['3 warn (o last chance)', 'Entro la rimozione del richiamo da parte dello staff', 'Ban di 24 ore'],
+                  ['Ban di 24 ore', 'Entro 1 mese dalla fine del ban', 'Ban di 7 giorni'],
+                  ['Ban di 7 giorni', 'Entro 2 mesi dalla fine del ban', '**Ban permanente**'],
                 ],
               },
             },
+            'Se passa più tempo di quello indicato senza nuove infrazioni, il ban si azzera (vedi sotto).',
           ],
         },
         {
           title: 'Azzeramento dei ban',
           body: [
-            'I ban si azzerano se non vengono commesse nuove infrazioni. Il conteggio parte dalla scadenza del ban:',
+            'Se dopo un ban non commetti nuove infrazioni per un certo periodo, il ban viene cancellato dal tuo storico e non conta più per i ban progressivi. Il periodo parte dal momento in cui il ban scade, non da quando è stato assegnato:',
             {
               table: {
-                head: ['Ban', 'Si azzera dopo'],
+                head: ['Ban scontato', 'Periodo senza infrazioni', 'Cosa succede'],
                 rows: [
-                  ['24 ore', '1 mese'],
-                  ['7 giorni', '2 mesi'],
+                  ['24 ore', '1 mese dalla fine del ban', 'Il ban si azzera'],
+                  ['7 giorni', '2 mesi dalla fine del ban', 'Il ban si azzera'],
                 ],
               },
             },
-            'Il giocatore torna così al conteggio dei warn, ripartendo da warn 1.',
+            'Una volta azzerato il ban, il giocatore riparte dal conteggio dei warn, da warn 1. Se invece commette una nuova infrazione prima che il periodo sia trascorso, scatta la sanzione successiva indicata nella tabella dei [ban progressivi](#art-16-2).',
           ],
         },
         {
           title: 'Infrazioni gravi',
           body: [
-            'Le azioni gravi, come trolling, cheating e molestie, comportano direttamente il **ban permanente**, senza passare dai warn.',
+            'Le azioni gravi, come trolling pesante, cheating e molestie, comportano direttamente il **ban permanente**, senza passare dai warn.',
           ],
         },
         {
