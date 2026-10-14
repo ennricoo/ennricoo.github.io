@@ -46,6 +46,10 @@ export const rules = {
           body: ['Compiere azioni impossibili per una persona reale, anche quando la fisica di GTA le rende realizzabili.'],
         },
         {
+          title: 'Powerplay',
+          body: ['Imporre azioni ed effetti al personaggio altrui, senza lasciargli la possibilità di reagire o rispondere in RP.'],
+        },
+        {
           title: 'RDM (Random Deathmatch)',
           body: [
             'Uccidere o ferire un giocatore senza un motivo roleplay.',
@@ -210,17 +214,9 @@ export const rules = {
           group: 'Scene ostili',
           title: 'Avvio delle azioni ostili',
           body: [
-            'Prima di usare la violenza contro dei civili, o durante una rapina, l\'aggressore deve avviare una scena credibile in RP. Questo significa:',
-            {
-              steps: [
-                'fare una richiesta o una minaccia chiara, con un contesto;',
-                'lasciare alla vittima il tempo di reagire in modo realistico, **non meno di 10 secondi**.',
-              ],
-            },
-            'Anche la vittima deve rispondere alla scena in RP. Ignorarla, o reagire senza motivo, è Fail RP o No-Fear.',
-            'Se la vittima reagisce con violenza per prima, l\'aggressore può rispondere subito.',
-            { note: 'Nelle rapine, oltre ai 10 secondi, resta valida la negoziazione minima di **2 minuti**.', kind: 'info' },
-            'L\'obbligo di avviare la scena **non si applica** tra fazioni che hanno già sviluppato un conflitto in RP, né negli assalti pianificati. Anche in questi casi il motivo deve esistere in gioco prima dell\'azione.',
+            'Un ingaggio non può partire dal nulla: deve esserci una **escalation**, cioè un passaggio dal piano **verbale** a quello **fisico**.',
+            'Anche la vittima deve rispondere alla scena in RP. Ignorarla, o reagire senza motivo, è Fail RP o No-Fear. Se è lei a reagire con violenza per prima, l\'aggressore può rispondere subito.',
+            '**Eccezione:** l\'escalation non è richiesta se tra le parti esiste già un contesto RP avviato (un conflitto in corso tra fazioni o individui) e negli assalti pianificati. Anche in questi casi il motivo deve essere maturato in gioco prima dell\'azione.',
           ],
         },
         {
@@ -248,7 +244,7 @@ export const rules = {
             },
             'Chi sceglie di opporsi ne accetta le conseguenze in RP, comprese ferite gravi, rapimento o morte.',
             { note: 'Le conseguenze subite non sono, da sole, un motivo di segnalazione. Si può segnalare solo se l\'aggressore ha violato il regolamento, ad esempio non ha avviato correttamente la scena o ha agito senza un motivo RP.', kind: 'info' },
-            'L\'orgoglio non può essere un pretesto per provocare una sparatoria senza motivo RP (vedi [RDM](#art-1-2) e [Cop baiting](#art-1-11)).',
+            'L\'orgoglio non può essere un pretesto per provocare una sparatoria senza motivo RP (vedi [RDM](#art-1-3) e [Cop baiting](#art-1-12)).',
           ],
         },
       ],
@@ -336,7 +332,7 @@ export const rules = {
     {
       id: 'assalti',
       title: 'Assalti',
-      intro: ['Regole per gli assalti alle centrali delle forze dell\'ordine e alle case delle fazioni criminali.'],
+      intro: ['Regole per gli assalti alle centrali, agli uffici amministrativi e alle case fazione.'],
       articles: [
         {
           group: 'Regole generali',
@@ -370,26 +366,29 @@ export const rules = {
           body: ['L\'intera fase organizzativa deve svolgersi esclusivamente in IC. È vietato usare canali esterni al gioco (Discord o altre piattaforme) per pianificare, coordinare o preparare l\'azione.'],
         },
         {
-          group: 'Assalti alle centrali delle forze dell\'ordine',
-          title: 'Reparti speciali',
+          group: 'Assalti alle centrali e agli uffici amministrativi',
+          groupNote: 'Per uffici amministrativi si intendono il municipio e tutte le strutture governative.',
+          title: 'Unità speciali',
           body: [
-            'Chi intende assaltare una centrale deve tenere conto della presenza al suo interno di reparti speciali, come la SWAT.',
+            'Chi intende assaltare una centrale deve tenere conto della presenza al suo interno di unità speciali, come la SWAT.',
+            'Lo stesso vale per chi intende attaccare gli uffici amministrativi: bisogna tenere conto dell\'intervento di unità speciali.',
             { note: 'Un assalto non organizzato, o svolto in modo superficiale, è considerato no-fear estremo.', kind: 'warning' },
           ],
         },
         {
           title: 'Loot',
-          body: ['Negli assalti alle centrali si applicano le [regole sul loot](#art-1-21) del regolamento server. È inoltre consentito sottrarre agli agenti le chiavi delle manette, se necessario ai fini dell\'azione.'],
+          body: ['Negli assalti alle centrali si applicano le [regole sul loot](#art-1-22) del regolamento server. È inoltre consentito sottrarre agli agenti le chiavi delle manette, se necessario ai fini dell\'azione.'],
         },
         {
-          title: 'Forze dell\'ordine minime',
-          body: ['Per assaltare una centrale è necessaria la presenza di almeno **7** agenti delle forze dell\'ordine.'],
+          title: 'Agenti minimi',
+          body: ['Per assaltare una centrale o gli uffici amministrativi è necessaria la presenza di almeno **7** agenti.'],
         },
         {
           group: 'Assalti alle case fazione',
           title: 'Verifica preventiva',
           body: [
-            'Prima di assaltare una casa fazione, le forze dell\'ordine devono verificare il numero di criminali presenti. L\'assalto è possibile solo se i membri sono più di **5**.',
+            'Prima di assaltare una casa fazione, gli assalitori devono verificare il numero di difensori presenti. L\'assalto è possibile solo se i difensori sono più di **4**.',
+            'La verifica serve anche a non effettuare un **offline raid**, cioè un assalto a una casa fazione quasi priva di difensori online.',
             'I metodi di verifica vengono decisi in fase di pianificazione (ad esempio un sorvolo in elicottero o un travestimento da fattorino).',
           ],
         },
@@ -405,9 +404,9 @@ export const rules = {
           body: [
             {
               table: {
-                head: ['', 'Centrale', 'Casa fazione'],
+                head: ['', 'Centrale / Uffici amministrativi', 'Casa fazione'],
                 rows: [
-                  ['**Condizione per assaltare**', 'Almeno 7 agenti delle forze dell\'ordine', 'Più di 5 membri della fazione'],
+                  ['**Condizione per assaltare**', 'Almeno 7 agenti', 'Più di 4 difensori'],
                   ['**Assalitori**', 'Massimo 20', 'Massimo 20'],
                   ['**Notifica al management**', 'Ticket almeno 3 ore prima', 'Ticket almeno 3 ore prima'],
                   ['**Loot**', 'Regole generali e chiavi delle manette', 'Regole generali'],
@@ -467,8 +466,8 @@ export const rules = {
         {
           title: 'Nascondigli e speed unit',
           body: [
-            'Durante un inseguimento ci si può nascondere in qualsiasi luogo, tranne sfruttando bug.',
-            'Con le supercar è possibile usare la speed unit in tutti gli inseguimenti, non solo nelle rapine. Per il resto i giocatori sono liberi di usare la fantasia, senza ulteriori limitazioni.',
+            'Durante un inseguimento ci si può nascondere in qualsiasi luogo, tranne quelli che sfruttano qualsiasi tipo di bug.',
+            'Qualora un inseguimento dovesse avvenire con l\'utilizzo di una supercar, la polizia può rispondere utilizzando la speed unit.',
           ],
         },
       ],
@@ -493,6 +492,7 @@ export const rules = {
           body: [
             'Per essere corrotti non è necessario aprire un ticket. Gli atti di corruzione possono andare da piccole azioni a vere e proprie infiltrazioni.',
             'Se un agente corrotto viene scoperto, si procede con un processo in RP.',
+            { note: 'Lo staff si riserva il diritto di intervenire in OOC qualora la corruzione dovesse compromettere l\'equilibrio della fazione.', kind: 'info' },
           ],
         },
       ],
@@ -705,7 +705,7 @@ export const rules = {
                   ['Rapito non ucciso', 'Tutto ciò che è accaduto'],
                   ['Non incappucciato (o simile) durante il trasporto', 'Anche il luogo di prigionia'],
                   ['Incappucciato (o simile) durante il trasporto', 'Non ricorda il luogo di prigionia'],
-                  ['Morto', 'Si applica l\'[amnesia post-morte](#art-1-19)'],
+                  ['Morto', 'Si applica l\'[amnesia post-morte](#art-1-20)'],
                 ],
               },
             },
@@ -808,7 +808,7 @@ export const rules = {
           title: 'Territorio',
           body: [
             'Se qualcuno entra nel territorio di una fazione criminale, la fazione può sparare liberamente solo se si tratta di altre fazioni o della polizia.',
-            'Per i civili valgono le regole ordinarie (vedi [Avvio delle azioni ostili](#art-1-25)). In ogni caso restano validi il buon senso e le conseguenze in RP delle proprie azioni.',
+            'Per i civili valgono le regole ordinarie (vedi [Avvio delle azioni ostili](#art-1-26)). In ogni caso restano validi il buon senso e le conseguenze in RP delle proprie azioni.',
           ],
         },
       ],

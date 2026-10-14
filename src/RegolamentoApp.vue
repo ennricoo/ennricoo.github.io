@@ -20,7 +20,11 @@ const withGroups = (list) => {
   return list.map((a) => ((group = a.group ?? group), { ...a, group }))
 }
 // `head`: il titolo del gruppo va mostrato prima di questo articolo
-const markHeads = (list) => list.map((a, j) => ({ ...a, head: a.group && a.group !== list[j - 1]?.group ? a.group : null }))
+// `groupNote` (opzionale, sul primo articolo del gruppo): chiarimento mostrato sotto il titolo del gruppo
+const markHeads = (list) => list.map((a, j) => {
+  const head = a.group && a.group !== list[j - 1]?.group ? a.group : null
+  return { ...a, head, headNote: head ? a.groupNote ?? null : null }
+})
 
 const sections = rules.sections.map((s, i) => ({
   ...s,
@@ -186,7 +190,8 @@ const open = async (id, { push = true } = {}) => {
     forcedUntil = performance.now() + 900
     // Il primo articolo di un gruppo si apre insieme al titolo del gruppo
     const el = document.getElementById(id)
-    const group = el?.closest('.art')?.previousElementSibling
+    let group = el?.closest('.art')?.previousElementSibling
+    if (group?.classList.contains('art-group-note')) group = group.previousElementSibling
     reveal(group?.classList.contains('art-group') ? group : el, same)
     highlight(id)
   }
@@ -655,6 +660,7 @@ onBeforeUnmount(() => {
               <p class="sec-eyebrow"><b>{{ pad(s.n) }}</b>{{ s.title }}</p>
               <template v-for="a in s.articles" :key="a.id">
               <h3 v-if="a.head" class="art-group">{{ a.head }}</h3>
+              <p v-if="a.headNote" class="art-group-note"><RichText :text="a.headNote" :query="q" /></p>
               <article class="art">
                 <span class="art-n" aria-hidden="true">{{ a.n }}</span>
                 <div class="art-main">
@@ -690,6 +696,7 @@ onBeforeUnmount(() => {
 
             <template v-for="a in chapter.articles" :key="a.id">
             <h3 v-if="a.head" class="art-group">{{ a.head }}</h3>
+            <p v-if="a.headNote" class="art-group-note"><RichText :text="a.headNote" /></p>
             <article class="art" :class="{ 'is-flash': flash === a.id }" :aria-labelledby="a.id">
               <span class="art-n" aria-hidden="true">{{ a.n }}</span>
               <div class="art-main">
@@ -1195,6 +1202,8 @@ input[type='search']::-webkit-search-cancel-button { display: none; }
   text-transform: uppercase;
   color: var(--blue-bright);
 }
+.art-group:has(+ .art-group-note) { margin-bottom: 0.6em; }
+.art-group-note { margin: 0 0 1.6em; font-size: 0.92em; color: var(--ink-3); }
 .art + .art-group { margin-top: 3.4em; padding-top: 2.2em; border-top: 1px solid var(--rule); }
 .art-head { display: flex; align-items: baseline; gap: 12px; }
 .art-n {
